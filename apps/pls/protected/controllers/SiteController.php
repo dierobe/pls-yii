@@ -84,10 +84,10 @@ class SiteController extends Controller {
 		}
 		
 		// get RRS Feed Slide #3
-		$slide_three = self::getSlide('https://supereval.com/blog/category/supereval-updates/feed');
+		$slide_three = self::getSlide(Yii::app()->params['slideThreeURL']);
 		
 		// get Blog post Slide #4
-		$slide_four = self::getSlide('https://supereval.com/blog/feed');
+		$slide_four = self::getSlide(Yii::app()->params['slideFourURL']);
 		
 		
 		$this->render('login', ['model' => $model, 'slide_three' => $slide_three, 'slide_four' => $slide_four]);
@@ -122,7 +122,7 @@ class SiteController extends Controller {
 	/**
 	 * Get most recent post from RSS feed
 	 *
-	 * @return array with values (title, pubDate, Description) or empty array
+	 * @return RSS item or null
 	 */
 	public function getSlide($url){
 	    
