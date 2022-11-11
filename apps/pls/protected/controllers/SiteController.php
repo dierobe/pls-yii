@@ -84,42 +84,13 @@ class SiteController extends Controller {
 		}
 		
 		// get RRS Feed Slide #3
-		$rss_feed_array = array();
-		try {
-		    $rss_feed_resp = @file_get_contents('https://supereval.com/blog/category/supereval-updates/feed');
-		    if ($rss_feed_resp !== false){
-		        $xml = @simplexml_load_string($rss_feed_resp);
-		        if ($xml !== false) {
-		            foreach ($xml->channel->item as $rss_item){
-		                $rss_feed_item = array();
-		                $rss_feed_item['title'] =  (string) $rss_item->title;
-		                $pubDate = (string) $rss_item->pubDate;
-		                $rss_feed_item['pubDate'] =  strtotime($pubDate); // Wed, 13 Jul 2022 19:30:25 +0000
-		                $rss_feed_item['description'] =  (string) $rss_item->description;
-		                array_push($rss_feed_array,$rss_feed_item);
-		            }
-		            // sort results by date
-		            usort($rss_feed_array, function($a, $b)
-		            {
-		                return -strcmp($a['pubDate'], $b['pubDate']);
-		            });
-		            // get only first most recent
-		            if (count($rss_feed_array) > 1){
-		                $rss_feed_array = $rss_feed_array[0];
-		            }
-		        } else {
-		            $rss_feed_array = array();
-		        }
-		    } else {
-		        $rss_feed_array = array();
-		    }
-		} catch (Exception $e) {
-		    // Handle error accordingly
-		    $rss_feed_array = array();
-		}
+		$slide_three = self::getSlide('https://supereval.com/blog/category/supereval-updates/feed');
+		
+		// get Blog post Slide #4
+		$slide_four = self::getSlide('https://supereval.com/blog/feed');
 		
 		
-		$this->render('login', ['model' => $model, 'rss_feed_array' => $rss_feed_array]);
+		$this->render('login', ['model' => $model, 'slide_three' => $slide_three, 'slide_four' => $slide_four]);
 	}
 
 	/**
@@ -146,5 +117,44 @@ class SiteController extends Controller {
 				$this->render('//site/error', $error);
 			}
 		}
+	}
+	
+	/**
+	 * Get most recent post from RSS feed
+	 *
+	 * @return array with values (title, pubDate, Description) or empty array
+	 */
+	public function getSlide($url){
+	    $rss_feed_array = array();
+	    try {
+	        $rss_feed_resp = @file_get_contents($url);
+	        if ($rss_feed_resp !== false){
+	            $xml = @simplexml_load_string($rss_feed_resp);
+	            if ($xml !== false) {
+	                $key = 0;
+	                foreach ($xml->channel->item as $rss_item){
+	                    $rss_feed_item = array();
+	                    $rss_feed_item['title'] =  (string) $rss_item->title;
+	                    $rss_feed_item['pubDate'] =  strtotime((string) $rss_item->pubDate); 
+	                    $rss_feed_item['description'] =  (string) $rss_item->description;
+	                    if ($key == 0){
+	                        $rss_feed_array = $rss_feed_item;
+	                    // get most recent
+	                    } else if ($rss_feed_item['pubDate'] > $rss_feed_array['pubDate']) {
+	                        $rss_feed_array = $rss_feed_item;
+	                    }
+	                    $key++;
+	                }
+	            } else {
+	                $rss_feed_array = array();
+	            }
+	        } else {
+	            $rss_feed_array = array();
+	        }
+	    } catch (Exception $e) {
+	        // Handle error accordingly
+	        $rss_feed_array = array();
+	    }
+	    return $rss_feed_array;
 	}
 }

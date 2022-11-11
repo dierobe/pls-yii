@@ -23,35 +23,35 @@
 					More</a>
 			</div>
 		</div>
-		<?php if (is_countable($rss_feed_array) && count($rss_feed_array) == 3) { ?>
+		<?php if (is_countable($slide_three) && count($slide_three) == 3) { ?>
     		<div class="swiper-slide">
     			<div class="overlay"></div>
     			<div class="content">
     				<i class="fal fa-comment-alt-edit"></i>
-    				<h3><?php echo $rss_feed_array['title']; ?></h3>
+    				<h3><?php echo $slide_three['title']; ?></h3>
     				<div class="row is-flex">
     					<div class="col-md-12">
-    						<div class="bubble"><?php echo $rss_feed_array['description']; ?></div>
+    						<div class="bubble"><?php echo $slide_three['description']; ?></div>
     					</div>
     				</div>
     			</div>
     		</div>
 		<?php } ?>
-		<div class="swiper-slide">
-			<div class="overlay"></div>
-			<div class="content">
-				<i class="fal fa-comment-alt-lines"></i>
-				<h3>Six Benefits of Having an Open Communication System with Teachers and School Staff</h3>
-				<div class="row">
-					<div class="col-md-12 bubble">
-						This communication system has a number of perks. Here are six ways your school district may be
-						able to benefit from it.
-					</div>
-				</div>
-				<a href="https://supereval.com/blog/open-communication-system" target="_blank" class="btn btn-primary">Read
-					Our Blog</a>
-			</div>
-		</div>
+		<?php if (is_countable($slide_four) && count($slide_four) == 3) { ?>
+    		<div class="swiper-slide">
+    			<div class="overlay"></div>
+    			<div class="content">
+    				<i class="fal fa-comment-alt-edit"></i>
+    				<h3><?php echo $slide_four['title']; ?></h3>
+    				<div class="row is-flex">
+    					<div class="col-md-12">
+    						<div class="bubble"><?php echo $slide_four['description']; ?></div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+		<?php } ?>
+		
 	</div>
 	<div class="swiper-pagination"></div>
 <div class="swiper-button-prev"></div>
