@@ -19,7 +19,7 @@ $this->breadcrumbs = [
 		</div>
 		<div class="col-md-6">
 			<?php
-			$this->renderPartial('_slides');
+			$this->renderPartial('_slides', ['rss_feed_array' => $rss_feed_array]);
 			?>
 		</div>
 	</div>

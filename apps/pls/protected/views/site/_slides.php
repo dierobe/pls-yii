@@ -23,35 +23,20 @@
 					More</a>
 			</div>
 		</div>
-		<div class="swiper-slide">
-			<div class="overlay"></div>
-			<div class="content">
-				<i class="fal fa-comment-alt-edit"></i>
-				<h3>SuperEval’s latest products updates include:</h3>
-				<div class="row is-flex">
-					<div class="col-md-6">
-						<div class="bubble">1. Show evaluator's previous evaluation data.</div>
-					</div>
-					<div class="col-md-6">
-						<div class="bubble">2. Added consolidated data view with highest rated, lowest rated, etc.
-							to all roles.
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="bubble">3. Added competency preview links to consolidated review table.
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="bubble">4. Send survey email to evaluatee on signature; show evaluator survey
-							dialog on signature.
-						</div>
-					</div>
-				</div>
-				<a href="https://supereval.com/blog/supereval-recent-platform-updates" target="_blank"
-				   class="btn btn-primary">Read
-					More</a>
-			</div>
-		</div>
+		<?php if (is_countable($rss_feed_array) && count($rss_feed_array) == 3) { ?>
+    		<div class="swiper-slide">
+    			<div class="overlay"></div>
+    			<div class="content">
+    				<i class="fal fa-comment-alt-edit"></i>
+    				<h3><?php echo $rss_feed_array['title']; ?></h3>
+    				<div class="row is-flex">
+    					<div class="col-md-12">
+    						<div class="bubble"><?php echo $rss_feed_array['description']; ?></div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+		<?php } ?>
 		<div class="swiper-slide">
 			<div class="overlay"></div>
 			<div class="content">
