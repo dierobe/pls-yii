@@ -125,6 +125,8 @@ class SiteController extends Controller {
 	 * @return array with values (title, pubDate, Description) or empty array
 	 */
 	public function getSlide($url){
+	    
+	    /* Original Code done by me 
 	    $rss_feed_array = array();
 	    try {
 	        $rss_feed_resp = @file_get_contents($url);
@@ -156,5 +158,31 @@ class SiteController extends Controller {
 	        $rss_feed_array = array();
 	    }
 	    return $rss_feed_array;
+	    */
+	    
+	    // Shorter code using Extension
+	    $rss_slide = null;
+	    try {
+    	    Feed::$userAgent = Yii::app()->params['curlUserAgent'];
+    	    Feed::$cacheDir = Yii::app()->params['latestUpdatesFeedCacheDir'];
+    	    Feed::$cacheExpire = Yii::app()->params['latestUpdatesFeedCacheExp'];
+    	    $feed = Feed::loadRss($url);
+    	    if (!empty($feed)) {
+    	        $key = 0;
+    	        foreach ($feed->item as $item) {
+    	            if ($key == 0){
+    	                $rss_slide = $item;
+    	            // get most recent
+    	            } else if ($item->timestamp > $rss_slide->timestamp) {
+    	                $rss_slide = $item;
+    	            }
+    	            $key++;
+    	        }
+    	    }
+	    } catch (Exception $e) {
+	        // Handle error accordingly
+	        $rss_slide = null;
+	    }
+	    return $rss_slide;
 	}
 }

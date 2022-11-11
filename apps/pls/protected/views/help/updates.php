@@ -13,17 +13,17 @@ $this->breadcrumbs = [
 
 <div class="row">
 	<?php
-	if (!empty($updates)) {
-		foreach ($updates as $item) {
+	if (!empty($items)) {
+		foreach ($items as $item) {
 			?>
 			<div class="col-md-12 update">
 				<h3><a href="<?= $item->link ?>" target="_blank"><?= $item->title ?></a></h3>
 				<p><?= $item->description ?></p>
+				<p><?= date('m/d/Y', (int) $item->timestamp); ?></p>
 			</div>
 			<?php
 		}
-	}
-	else {
+	} else {
 		?>
 		<?= Yii::t('pls', 'No updates are available at this time.') ?>
 		<?php

@@ -23,29 +23,29 @@
 					More</a>
 			</div>
 		</div>
-		<?php if (is_countable($slide_three) && count($slide_three) == 3) { ?>
+		<?php if (isset($slide_three)) { ?>
     		<div class="swiper-slide">
     			<div class="overlay"></div>
     			<div class="content">
     				<i class="fal fa-comment-alt-edit"></i>
-    				<h3><?php echo $slide_three['title']; ?></h3>
+    				<h3><?php echo $slide_three->title; ?></h3>
     				<div class="row is-flex">
     					<div class="col-md-12">
-    						<div class="bubble"><?php echo $slide_three['description']; ?></div>
+    						<div class="bubble"><?php echo $slide_three->description; ?></div>
     					</div>
     				</div>
     			</div>
     		</div>
 		<?php } ?>
-		<?php if (is_countable($slide_four) && count($slide_four) == 3) { ?>
+		<?php if (isset($slide_four)) { ?>
     		<div class="swiper-slide">
     			<div class="overlay"></div>
     			<div class="content">
     				<i class="fal fa-comment-alt-edit"></i>
-    				<h3><?php echo $slide_four['title']; ?></h3>
+    				<h3><?php echo $slide_four->title; ?></h3>
     				<div class="row is-flex">
     					<div class="col-md-12">
-    						<div class="bubble"><?php echo $slide_four['description']; ?></div>
+    						<div class="bubble"><?php echo $slide_four->description; ?></div>
     					</div>
     				</div>
     			</div>

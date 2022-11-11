@@ -109,14 +109,20 @@ class HelpController extends Controller {
 		$feed = Feed::loadRss(Yii::app()->params['latestUpdatesFeedUrl']);
 		$items = [];
 		if (!empty($feed)) {
+		    $key = 0;
 			foreach ($feed->item as $item) {
 				$more = ' <a href="' . $item->link . '" target="_blank">Read more</a>';
 				$item->description = trim(str_replace(' [&#8230;]', '...' . $more, $item->description));
 				$item->description = preg_replace('/The post.*appeared first on .*\./', '', $item->description);
+				array_push($items,$item);
+				$key++;
+				// get only 5 most recent
+				if ($key == 5){
+				    break;
+				}
 			}
-			$items = $feed->item;
 		}
-		$this->render('updates', ['updates' => $items]);
+		$this->render('updates', ['items' => $items]);
 	}
 
 }
